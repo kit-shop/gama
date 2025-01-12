@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guess the Number</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+    .game-container {
+      text-align: center;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .game-container h1 {
+      margin: 0 0 10px;
+      color: #333;
+    }
+    .input-group {
+      margin: 20px 0;
+    }
+    input[type="number"] {
+      padding: 10px;
+      width: 150px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    button {
+      padding: 10px 20px;
+      margin-left: 10px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .message {
+      margin-top: 20px;
+      font-size: 1.2em;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <h1>Guess the Number</h1>
+    <p>I'm thinking of a number between 1 and 100.</p>
+    <p>Can you guess what it is?</p>
+    <div class="input-group">
+      <input type="number" id="guess" placeholder="Enter your guess" min="1" max="100">
+      <button id="submit">Submit</button>
+    </div>
+    <div class="message" id="message">Make your guess!</div>
+  </div>
+
+  <script>
+    const randomNumber = Math.floor(Math.random() * 100) + 1;
+    const messageElement = document.getElementById('message');
+    const inputElement = document.getElementById('guess');
+    const buttonElement = document.getElementById('submit');
+
+    buttonElement.addEventListener('click', () => {
+      const userGuess = parseInt(inputElement.value, 10);
+
+      if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+        messageElement.textContent = 'Please enter a number between 1 and 100!';
+        return;
+      }
+
+      if (userGuess === randomNumber) {
+        messageElement.textContent = `Congratulations! You guessed it right. The number was ${randomNumber}.`;
+        messageElement.style.color = 'green';
+        inputElement.disabled = true;
+        buttonElement.disabled = true;
+      } else if (userGuess < randomNumber) {
+        messageElement.textContent = 'Too low! Try again.';
+        messageElement.style.color = '#555';
+      } else {
+        messageElement.textContent = 'Too high! Try again.';
+        messageElement.style.color = '#555';
+      }
+    });
+  </script>
+</body>
+</html>
